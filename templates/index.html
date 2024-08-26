@@ -1,0 +1,161 @@
+{% include 'header.html' %}
+
+<style>
+  .alert-error {
+    background-color: #ffdd79;
+  }
+
+  /* Responsive table styles */
+  .table-wrapper {
+    overflow-x: auto; /* Enables horizontal scroll on small screens */
+  }
+
+  .btn-customized {
+    background-color: #dc3545; /* Red color for Delete All Records button */
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .main-header {
+      text-align: center;
+    }
+
+    .table thead th {
+      font-size: 14px;
+    }
+
+    .btn-group {
+      flex-direction: column;
+    }
+
+    .btn-group .btn {
+      margin-bottom: 10px;
+    }
+
+    .container.nodata {
+      text-align: center;
+    }
+    #responsive {
+      display: none;
+    }
+  }
+</style>
+
+<main>
+  <div id="msg" class="container my-3">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="container main-site-wrapper">
+    <div class="alert alert-danger mt-5 main-header" role="alert">
+      Django CRUD Operations!
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-6 main-header">
+        <div class="alert alert-info" role="alert">Add/Update Student!</div>
+      </div>
+      <div class="col-sm-12 col-md-6 main-header">
+        <div class="alert alert-info" id="responsive" role="alert">Show Students Information!</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        {% if editdata %}
+          <form action="{% url 'save' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input name="name" type="text" class="form-control" id="name" value="{{editdata.name}}" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input name="email" type="email" class="form-control" id="email" value="{{editdata.email}}" />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" id="exampleInputPassword1" value="{{editdata.password}}" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'reset' %}" class="btn btn-customized">Delete All Records</a>
+          </form>
+        {% else %}
+          <form action="{% url 'save' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input name="name" type="text" class="form-control" id="name" />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input name="email" type="email" class="form-control" id="email" />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" id="exampleInputPassword1" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'reset' %}" class="btn btn-customized">Delete All Records</a>
+          </form>
+        {% endif %}
+      </div>
+
+      <div class="col-sm-12 col-md-8">
+        <div class="table-wrapper">
+          <table class="table table-bordered">
+            {% if data %}
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th style="text-align: center">Action</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                {% for i in data %}
+                  <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.email}}</td>
+                    <td>{{i.password}}</td>
+                    <td class="text-center">
+                      <div class="btn-group" role="group">
+                        <a href="{% url 'delete' i.slug %}">
+                          <button type="button" class="btn btn-danger">
+                            <i class="fa-solid fa-trash fa-lg"></i> Delete
+                          </button>
+                        </a>
+                        <a href="{% url 'edit' i.slug %}">
+                          <button type="button" class="btn btn-warning">
+                            <i class="fa-solid fa-pen"></i> Edit
+                          </button>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            {% else %}
+              <div class="container nodata">
+                <h1>No Data Found!</h1>
+                <h5>👈 Add from the Left Menu</h5>
+              </div>
+            {% endif %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include 'footer.html' %}

@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  overflow-y: hidden !important;
+  background: transparent; /* Optional: just to avoid scrollbar space */
+}
+
+.main-header {
+  text-align: center !important;
+  font-weight: 600;
+  font-family: "poppins", sans-serif;
+  font-size: x-large;
+  font-style: normal;
+}
+
+.btn-cust-z {
+  display: flex;
+  justify-content: center;
+}
+
+#msg {
+  text-align: center !important;
+  font-size: larger !important;
+  font-weight: bolder !important;
+  font-family: monospace !important;
+}
+
+.nodata {
+  text-align: center;
+  color: crimson;
+  border: 1px solid #adb5bd;
+  /* border-width: 1px; */
+  width: 50%;
+  justify-content: center;
+  border-radius: 8px;
+  align-items: center;
+  justify-items: center;
+  margin-left: 21%;
+  margin-top: 12%;
+}
+
+.btn-cutomized {
+  background-color: #ff4426;
+  color: white;
+}/*# sourceMappingURL=style.css.map */
